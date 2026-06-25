@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sena — A Bizarre Adventure</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="speed-lines"></div>
+<canvas id="confetti"></canvas>
+
+<!-- Controls top-left -->
+<div class="controls-strip">
+  <div class="ctrl-btn" id="muteBtn" onclick="toggleMute()">🔊 MUTE</div>
+  <div class="ctrl-btn" id="themeBtn" onclick="toggleTheme()">☀️ DAY</div>
+</div>
+
+<!-- Music bars bottom center -->
+<div class="music-bars" id="musicBars">
+  <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+  <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+</div>
+
+<audio id="bgMusic" loop autoplay>
+ <source src="XG - NEW DANCE (Official Music Video).mp3" type="audio/mpeg">
+</audio>
+
+<!-- ════ CINEMATIC ════ -->
+<div id="cinematic">
+  <div class="cinem-lines"></div>
+  <div class="cinem-bar-top"></div>
+  <div class="cinem-bar-bottom"></div>
+  <div class="cinem-content" id="cinemContent"></div>
+  <div class="cinem-skip" onclick="skipCinematic()">SKIP ▶</div>
+</div>
+
+<!-- ════ LOADING ════ -->
+<section class="screen" id="loading">
+  <div class="loading-container">
+    <p class="loading-title">✦ A BIZARRE ADVENTURE AWAITS ✦</p>
+    <div class="stand-spinner"><div class="stand-inner">⭐</div></div>
+    <p style="color:rgba(212,175,55,.5);font-family:'Bebas Neue',cursive;letter-spacing:3px;margin-top:25px;font-size:13px;">STAND POWER LOADING...</p>
+  </div>
+</section>
+
+<!-- ════ START ════ -->
+<section class="screen active" id="start">
+  <canvas id="galaxyCanvas" class="page-canvas"></canvas>
+  <div class="card">
+    <div class="part-divider">PART I</div>
+    <h1>🌟 A Bizarre Greeting 🌟</h1>
+    <p style="font-size:22px;margin:10px 0;">「HAPPY BIRTHDAY」</p>
+    <p>Sena, your Stand has called you here for a reason...</p>
+    <p style="color:var(--gold-light);font-style:italic;">Something truly bizarre has been prepared.</p>
+    <button class="btn" onclick="nextScreen('countdown')">YARE YARE DAZE... →</button>
+  </div>
+</section>
+
+<!-- ════ COUNTDOWN ════ -->
+<section class="screen" id="countdown">
+  <canvas id="lightningCanvas" class="page-canvas"></canvas>
+  <div class="card">
+    <div class="part-divider">PART II</div>
+    <h2>SENA IS TURNING...</h2>
+    <div class="countdown-grid">
+      <div class="count-box"><span class="count-number" id="years">0</span><span class="count-label">YEARS OLD</span></div>
+      <div class="count-box"><span class="count-number" id="days">0</span><span class="count-label">DAYS SINCE</span></div>
+      <div class="count-box"><span class="count-number" id="hours">0</span><span class="count-label">HOURS SINCE</span></div>
+    </div>
+    <p style="color:var(--purple-light);font-size:13px;font-style:italic;">「21 years of being absolutely magnificent.」</p>
+    <button class="btn" onclick="nextScreen('letter')">CONTINUE →</button>
+  </div>
+</section>
+
+<!-- ════ LETTER ════ -->
+<section class="screen" id="letter">
+  <div class="card scrollable">
+    <div class="part-divider">PART III</div>
+    <h2>「 Dear Sena 」</h2>
+    <p id="typedText" style="text-align:left;min-height:160px;"></p>
+    <p style="text-align:right;color:var(--gold);font-style:italic;margin-top:15px;font-family:'Bebas Neue',cursive;letter-spacing:2px;">— Siddharth</p>
+    <button class="btn" onclick="nextScreen('cake')">NEXT →</button>
+  </div>
+</section>
+
+<!-- ════ CAKE ════ -->
+<section class="screen cake-screen" id="cake">
+  <div class="stand-aura"></div>
+  <div class="cake-container">
+    <div class="part-divider" style="color:rgba(212,175,55,.6);">PART IV</div>
+    <h1 style="-webkit-text-fill-color:var(--gold-light);color:var(--gold-light);background:none;">🕯️ MAKE A WISH 🕯️</h1>
+    <p style="color:var(--purple-light);font-style:italic;">「Channel your Stand power...」</p>
+    <div class="cake" onclick="blowCandle()">
+      <div class="candle"><div class="flame" id="flame"></div></div>
+      <div class="cake-layer layer1"></div>
+      <div class="cake-layer layer2"></div>
+      <div class="cake-layer layer3"></div>
+    </div>
+    <p style="color:rgba(212,175,55,.7);font-family:'Bebas Neue',cursive;letter-spacing:3px;font-size:13px;">CLICK THE CANDLE TO UNLEASH YOUR POWER</p>
+    <button class="btn hidden" id="cakeNext" onclick="nextScreen('jojoGame')">STAND BY! →</button>
+  </div>
+</section>
+
+<!-- ════ SLOT MACHINE ════ -->
+<section class="screen" id="jojoGame" style="background:radial-gradient(ellipse at center,rgba(75,0,130,.5) 0%,var(--bg-dark) 70%);">
+  <div class="card" style="max-width:480px;padding:32px 28px;">
+    <div class="part-divider">PART V — THE FATES DECIDE</div>
+    <h2>「 SPIN YOUR DESTINY 」</h2>
+    <p style="font-size:13px;color:rgba(255,248,231,.5);margin-bottom:20px;">Pull the lever and let the Stands choose your birthday fortune!</p>
+    <div class="slot-machine">
+      <div class="slot-lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="slot-reels-wrap">
+        <div class="slot-reel-outer"><div class="slot-reel"><div class="slot-face" id="face0">🌟</div></div></div>
+        <div class="slot-reel-outer"><div class="slot-reel"><div class="slot-face" id="face1">💜</div></div></div>
+        <div class="slot-reel-outer"><div class="slot-reel"><div class="slot-face" id="face2">✨</div></div></div>
+      </div>
+      <div class="slot-payline"></div>
+      <div class="slot-result" id="slotResult">
+        <span id="slotMsg" style="color:rgba(255,248,231,.4);font-size:13px;">「 Fate awaits... 」</span>
+      </div>
+    </div>
+    <div class="slot-lever-wrap" onclick="spinSlot()">
+      <div class="slot-lever-rod"><div class="slot-lever-ball">PULL</div></div>
+    </div>
+    <p style="color:rgba(212,175,55,.4);font-family:'Bebas Neue',cursive;letter-spacing:3px;font-size:11px;margin-top:8px;">SPINS LEFT: <span id="spinsLeft">3</span></p>
+    <button class="btn hidden" id="slotNext" onclick="nextScreen('timeline')" style="margin-top:16px;">CONTINUE →</button>
+    <button class="btn-ghost" onclick="nextScreen('timeline')">Skip</button>
+  </div>
+</section>
+
+<!-- ════ TIMELINE ════ -->
+<section class="screen" id="timeline">
+  <canvas id="rippleCanvas" class="page-canvas"></canvas>
+  <div class="card scrollable" style="max-width:600px;">
+    <div class="part-divider">PART VI</div>
+    <h2>「 Our Bizarre Journey 」</h2>
+    <div class="timeline">
+      <div class="timeline-line"></div>
+      <!-- ✏️ EDIT TIMELINE TEXTS BELOW -->
+      <div class="timeline-item" style="animation-delay:.1s"><div class="timeline-dot"></div><h3>THE BEGINNING</h3><p>When we first became friends 🤝</p></div>
+      <div class="timeline-item" style="animation-delay:.2s"><div class="timeline-dot"></div><h3>EPIC MOMENTS</h3><p>All those unforgettable times 🎭</p></div>
+      <div class="timeline-item" style="animation-delay:.3s"><div class="timeline-dot"></div><h3>INSIDE JOKES</h3><p>Things only we understand 😂</p></div>
+      <div class="timeline-item" style="animation-delay:.4s"><div class="timeline-dot"></div><h3>SUPPORT SQUAD</h3><p>Being there for each other 💪</p></div>
+      <div class="timeline-item" style="animation-delay:.5s"><div class="timeline-dot"></div><h3>TODAY! 🎂</h3><p>Your most bizarre adventure yet!</p></div>
+      <!-- ✏️ END EDITABLE TIMELINE -->
+    </div>
+    <button class="btn" onclick="nextScreen('memories')">NEXT →</button>
+  </div>
+</section>
+
+<!-- ════ MEMORIES ════ -->
+<section class="screen" id="memories">
+  <div class="card" style="max-width:520px;">
+    <div class="part-divider">PART VII</div>
+    <h2>「 Memories 」</h2>
+    <div class="mem-grid">
+      <div class="mem-card"><div class="mem-icon">🌟</div><div class="mem-title">GOOD TIMES</div><div class="mem-sub">Laughs &amp; chaos</div></div>
+      <div class="mem-card"><div class="mem-icon">⚔️</div><div class="mem-title">ADVENTURES</div><div class="mem-sub">Epic journeys</div></div>
+      <div class="mem-card"><div class="mem-icon">💜</div><div class="mem-title">FRIENDSHIP</div><div class="mem-sub">Unbreakable bond</div></div>
+      <div class="mem-card"><div class="mem-icon">✨</div><div class="mem-title">MEMORIES</div><div class="mem-sub">Never forgotten</div></div>
+    </div>
+    <p style="color:rgba(212,175,55,.5);font-size:13px;font-style:italic;">「These moments are engraved in our Stands forever.」</p>
+    <button class="btn" onclick="nextScreen('bottle')">CONTINUE →</button>
+  </div>
+</section>
+
+<!-- ════ SCROLL ════ -->
+<section class="screen" id="bottle">
+  <canvas id="bhCanvas" class="page-canvas"></canvas>
+  <div class="card">
+    <div class="part-divider">PART VIII</div>
+    <h2>「 A Hidden Message 」</h2>
+    <div class="scroll-container" onclick="openBottle()">📜</div>
+    <p style="color:rgba(212,175,55,.6);font-family:'Bebas Neue',cursive;letter-spacing:3px;font-size:13px;">CLICK TO REVEAL</p>
+  </div>
+</section>
+
+<!-- ════ ZODIAC ════ -->
+<section class="screen" id="zodiac">
+  <div class="card">
+    <div class="part-divider">PART IX</div>
+    <h2>✨ Your Cosmic Stand ✨</h2>
+    <div class="zodiac-symbol">♊</div>
+    <h3 style="color:var(--gold-light);font-size:24px;letter-spacing:4px;">GEMINI</h3>
+    <p>Like <strong style="color:var(--gold);">Foo Fighters</strong> — you contain multitudes, endlessly curious and brilliantly adaptive. You can be everyone and no one, yet wholly yourself. 💫</p>
+    <div style="margin:18px 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <span class="trait-tag">💜 EXPRESSIVE</span>
+      <span class="trait-tag">⚡ WITTY</span>
+      <span class="trait-tag">✦ ADAPTABLE</span>
+    </div>
+    <p style="color:rgba(212,175,55,.5);font-size:13px;">Born May 26th — a spring soul blazing with duality 🌸</p>
+    <button class="btn" onclick="nextScreen('standCard')">YOUR STAND AWAITS →</button>
+  </div>
+</section>
+
+<!-- ════ STAND CARD ════ -->
+<section class="screen stand-card-screen" id="standCard">
+  <canvas id="embersCanvas" class="page-canvas"></canvas>
+  <div class="part-divider" style="color:rgba(212,175,55,.6);z-index:2;position:relative;">PART X — STAND CARD</div>
+  <div class="stand-card" id="theStandCard">
+    <div class="sc-header">
+      <span class="sc-header-label">STAND USER: SENA</span>
+      <span class="sc-header-num">NO. ∞</span>
+    </div>
+    <div class="sc-visual" id="scVisual">
+      <div class="sc-void-rings"></div>
+      <div class="sc-void-core">🕳️</div>
+    </div>
+    <div class="sc-name">
+      <div class="sc-stand-name">「 THE VOID 」</div>
+      <div class="sc-user-name">STAND USER: SENA</div>
+    </div>
+    <div class="sc-ability">
+      <div class="sc-ability-label">ABILITY</div>
+      <div class="sc-ability-text">Creates black holes and wormholes — bending space itself to the user's will. Nothing escapes its pull. Distance is meaningless.</div>
+    </div>
+    <div class="sc-stats" id="scStats"></div>
+    <div class="sc-footer">
+      <span class="sc-footer-text">DESTRUCTIVE POWER</span>
+      <span class="sc-rank">GOD</span>
+    </div>
+  </div>
+  <button class="btn" onclick="nextScreen('photoscreen')" style="margin-top:24px;z-index:2;position:relative;">CONTINUE →</button>
+</section>
+
+
+<!-- ════ PHOTO BACKGROUND SCREEN ════ -->
+<section class="screen" id="photoscreen">
+  <!-- ✏️ Replace photo.jpg with your image filename in the same folder -->
+  <div class="photo-bg" id="photoBg" style="background-image:url('photo.jpg')"></div>
+  <div class="photo-overlay"></div>
+  <div class="photo-card">
+    <div class="part-divider" style="color:rgba(212,175,55,0.7);">PART XI</div>
+    <!-- ✏️ Edit caption below -->
+    <p class="photo-caption" id="photoCaption">「 A moment worth remembering... 」</p>
+    <button class="btn" onclick="nextScreen('envelope')" style="margin-top:20px;">NEXT →</button>
+  </div>
+</section>
+
+<!-- ════ ENVELOPE ════ -->
+<section class="screen envelope-screen" id="envelope">
+  <div class="card scrollable" style="max-width:480px;max-height:88vh;" id="envelopeCard">
+    <div class="part-divider">PART XII</div>
+    <h2>「 For Sena 」</h2>
+
+    <div id="envelopeView">
+      <!-- The envelope -->
+      <div class="env-outer" onclick="openEnvelope()">
+        <div class="env-body-new">
+          <div class="env-v-left"></div>
+          <div class="env-v-right"></div>
+          <div class="env-inner-lines">
+            <div class="env-inner-line"></div>
+            <div class="env-inner-line"></div>
+            <div class="env-inner-line"></div>
+          </div>
+          <div class="env-to">✦ FOR SENA ✦</div>
+          <div class="env-seal-new">✦</div>
+          <!-- corner accents -->
+          <div class="env-corner tl"></div>
+          <div class="env-corner tr"></div>
+          <div class="env-corner bl"></div>
+          <div class="env-corner br"></div>
+        </div>
+        <div class="env-flap-new"></div>
+      </div>
+      <p style="color:rgba(212,175,55,.5);font-family:'Bebas Neue',cursive;letter-spacing:3px;font-size:12px;margin-top:10px;">TAP TO OPEN</p>
+    </div>
+
+    <div id="letterView" class="hidden">
+      <div class="letter-reveal">
+        <div class="letter-paper-lines"></div>
+        <p id="envelopeLetter" style="text-align:left;font-style:italic;position:relative;z-index:1;"></p>
+      </div>
+      <p style="text-align:right;color:var(--gold);font-family:'Bebas Neue',cursive;letter-spacing:2px;margin-top:10px;">— Siddharth</p>
+      <button class="btn" onclick="nextScreen('final')">FINALE →</button>
+      <div style="height:24px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FINAL ════ -->
+<section class="screen final-screen" id="final">
+  <!-- Three.js heart canvas sits behind everything -->
+  <canvas id="heartCanvas"></canvas>
+  <p class="heart-drag-hint" id="heartHint">drag to rotate 💜</p>
+
+  <div class="card final-card" style="z-index:2;">
+    <div class="part-divider">FINALE</div>
+    <h1>🎉 HAPPY BIRTHDAY<br>SENA! 🎉</h1>
+    <p style="color:var(--gold-light);font-size:16px;margin:15px 0;">「Your bizarre adventure continues...」</p>
+    <p>No matter where our paths lead,<br>you make every part worth it. 🌟<br><br>
+    Here's to another year of<br>
+    <strong style="color:var(--gold);">ORA ORA ORA</strong> moments,<br>
+    great Stands, and even greater memories.<br><br>
+    <em style="color:var(--purple-light);">— Siddharth</em></p>
+    <div style="margin-top:20px;font-family:'Bebas Neue',cursive;letter-spacing:4px;color:rgba(212,175,55,.4);font-size:13px;">✦ TO BE CONTINUED... ✦</div>
+    <button class="btn" onclick="replay()">REPLAY ↩</button>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
